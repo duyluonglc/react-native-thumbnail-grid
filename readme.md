@@ -1,4 +1,6 @@
 # React Native Photo Grid
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/duyluonglc/react-native-photo-grid.svg)](https://greenkeeper.io/)
 <p align="center">
   <img src="https://github.com/duyluonglc/react-native-photo-grid/blob/master/grid.gif?raw=true" width=200/>
 </p>
