@@ -1,0 +1,15 @@
+{
+  "name": "react-native-photo-grid",
+  "version": "0.1.0",
+  "description": "the photo thumbnail grid",
+  "main": "PhotoGrid.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "photo",
+    "grid"
+  ],
+  "author": "Duy Luong",
+  "license": "MIT"
+}
