@@ -14,6 +14,7 @@ Code:
 
 | Property | Type | Description |
 | --- | --- | --- | --- |
+
 |source | PropTypes.array | Array uri of image|
 |width | PropTypes.number | Container width |
 |height | PropTypes.number | Container height |
