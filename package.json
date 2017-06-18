@@ -1,6 +1,6 @@
 {
-  "name": "react-native-photo-grid",
-  "version": "0.1.0",
+  "name": "react-native-thumbnail-grid",
+  "version": "0.1.1",
   "description": "the photo thumbnail grid",
   "main": "PhotoGrid.js",
   "scripts": {

@@ -23,6 +23,7 @@ Property | Type | Description
 source | PropTypes.array | Array uri of image
 width | PropTypes.number | Container width
 height | PropTypes.number | Container height
+ratio | PropTypes.float | Split screen ratio
 style | PropTypes.object | Container styles
 imageStyle | PropTypes.object | Image styles
 onPressImage | PropTypes.func | Callback when press image

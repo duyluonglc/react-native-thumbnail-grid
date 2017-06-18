@@ -5,8 +5,6 @@ import _ from 'lodash'
 import eachSeries from 'async/eachSeries'
 const { width } = Dimensions.get('window')
 
-const ratio = 1 / 2
-
 class PhotoGrid extends Component {
   constructor (props) {
     super(props)
@@ -56,17 +54,22 @@ class PhotoGrid extends Component {
         callback()
       })
     }, () => {
-      this.setState({ images, firstViewImages, secondViewImages })
-      this.getDimensions(firstViewImages, secondViewImages)
+      if (this.state.containerWidth) {
+        this.setState({ images, firstViewImages, secondViewImages })
+        this.getDimensions(firstViewImages, secondViewImages)
+      }
     })
   }
 
   getDimensions (firstViewImages, secondViewImages) {
     const { containerWidth, containerHeight } = this.state
-    const { width, height } = this.props
+    const { width, height, ratio } = this.props
     const iWidth = _.sumBy(firstViewImages, 'width')
     const iHeight = _.sumBy(firstViewImages, 'height')
     const direction = iWidth / iHeight > width / height ? 'column' : 'row'
+    
+    const firstViewWidth = direction === 'column' ? containerWidth : (containerWidth * (1 - ratio))
+    const firstViewHeight = direction === 'column' ? (containerHeight * (1 - ratio)) : containerHeight
 
     const firstImageWidth = direction === 'column' ? (containerWidth / firstViewImages.length) : (containerWidth * (1 - ratio))
     const firstImageHeight = direction === 'column' ? (containerHeight * (1 - ratio)) : (containerHeight / firstViewImages.length)
@@ -135,14 +138,16 @@ PhotoGrid.prototypes = {
   height: PropTypes.number,
   style: PropTypes.object,
   imageStyle: PropTypes.object,
-  onPressImage: PropTypes.func
+  onPressImage: PropTypes.func,
+  ratio: PropTypes.float
 }
 
 PhotoGrid.defaultProps = {
   style: {},
   imageStyle: {},
   width: width,
-  height: 400
+  height: 400,
+  ratio: 1 / 3
 }
 
 const styles = {
