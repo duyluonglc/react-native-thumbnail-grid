@@ -9,14 +9,12 @@ class PhotoGrid extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      width: 0,
-      height: 0,
       direction: null,
       images: [],
       firstViewImages: [],
       secondViewImages: [],
-      containerWidth: props.containerWidth,
-      containerHeight: props.containerHeight
+      width: props.width,
+      height: props.height
     }
   }
 
@@ -54,7 +52,7 @@ class PhotoGrid extends Component {
         callback()
       })
     }, () => {
-      if (this.state.containerWidth) {
+      if (this.state.width) {
         this.setState({ images, firstViewImages, secondViewImages })
         this.getDimensions(firstViewImages, secondViewImages)
       }
@@ -62,22 +60,29 @@ class PhotoGrid extends Component {
   }
 
   getDimensions (firstViewImages, secondViewImages) {
-    const { containerWidth, containerHeight } = this.state
-    const { width, height, ratio } = this.props
+    const { width, height } = this.props
+    let ratio = 0
+    if (secondViewImages.length === 0) {
+      ratio = 0
+    } else if (secondViewImages.length === 1) {
+      ratio = 1 / 2
+    } else {
+      ratio = this.props.ratio
+    }
     const iWidth = _.sumBy(firstViewImages, 'width')
     const iHeight = _.sumBy(firstViewImages, 'height')
     const direction = iWidth / iHeight > width / height ? 'column' : 'row'
-    
-    const firstViewWidth = direction === 'column' ? containerWidth : (containerWidth * (1 - ratio))
-    const firstViewHeight = direction === 'column' ? (containerHeight * (1 - ratio)) : containerHeight
 
-    const firstImageWidth = direction === 'column' ? (containerWidth / firstViewImages.length) : (containerWidth * (1 - ratio))
-    const firstImageHeight = direction === 'column' ? (containerHeight * (1 - ratio)) : (containerHeight / firstViewImages.length)
+    const firstImageWidth = direction === 'column' ? (width / firstViewImages.length) : (width * (1 - ratio))
+    const firstImageHeight = direction === 'column' ? (height * (1 - ratio)) : (height / firstViewImages.length)
 
-    const secondImageWidth = direction === 'column' ? (containerWidth * ratio) : (containerWidth / secondViewImages.length)
-    const secondImageHeight = direction === 'column' ? (containerHeight / secondViewImages.length) : (containerHeight * ratio)
+    const secondImageWidth = direction === 'column' ? (width * ratio) : (width / secondViewImages.length)
+    const secondImageHeight = direction === 'column' ? (height / secondViewImages.length) : (height * ratio)
 
-    this.setState({ firstImageWidth, firstImageHeight, secondImageWidth, secondImageHeight, direction, width, height })
+    const secondViewWidth = direction === 'column' ? width : (width * ratio)
+    const secondViewHeight = direction === 'column' ? (height * ratio) : height
+
+    this.setState({ secondViewWidth, secondViewHeight, firstImageWidth, firstImageHeight, secondImageWidth, secondImageHeight, direction, width, height })
   }
 
   render () {
@@ -88,11 +93,13 @@ class PhotoGrid extends Component {
       secondImageHeight,
       firstViewImages,
       secondViewImages,
+      secondViewWidth,
+      secondViewHeight,
       direction,
       width,
       height
     } = this.state
-
+    console.log(this.state)
     return (
       <View style={[{ flexDirection: direction, width, height }, this.props.styles]}>
         <View style={{ flex: 1, flexDirection: direction === 'row' ? 'column' : 'row' }}>
@@ -108,7 +115,7 @@ class PhotoGrid extends Component {
         </View>
         {
           secondViewImages.length ? (
-            <View style={{ flex: 1, flexDirection: direction === 'row' ? 'column' : 'row' }}>
+            <View style={{ width: secondViewWidth, height: secondViewHeight, flexDirection: direction === 'row' ? 'column' : 'row' }}>
               {secondViewImages.map((image, index) => (
                 <TouchableOpacity key={index} style={{ flex: 1 }}
                   onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>

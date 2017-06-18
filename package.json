@@ -1,7 +1,7 @@
 {
   "name": "react-native-thumbnail-grid",
-  "version": "0.1.1",
-  "description": "the photo thumbnail grid",
+  "version": "0.1.2",
+  "description": "The photo thumbnail grid",
   "main": "PhotoGrid.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
