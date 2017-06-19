@@ -2,64 +2,34 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View, Image, Text, Dimensions, TouchableOpacity } from 'react-native'
 import _ from 'lodash'
-import eachSeries from 'async/eachSeries'
 const { width } = Dimensions.get('window')
 
 class PhotoGrid extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      direction: null,
-      images: [],
-      firstViewImages: [],
-      secondViewImages: [],
       width: props.width,
       height: props.height
     }
   }
 
-  componentWillMount () {
+  render () {
     const source = _.take(this.props.source, 5)
-    this.getImageDimensions(source)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    this.forceUpdate()
-    if (nextProps.source) {
-      const source = _.take(this.props.source, 5)
-      this.getImageDimensions(source)
-    }
-  }
-
-  getImageDimensions (source) {
-    const images = []
     const firstViewImages = []
     const secondViewImages = []
-    const firstItemCount = source.length >= 5 ? 2 : 1
+    const firstItemCount = source.length === 5 ? 2 : 1
     let index = 0
-    eachSeries(source, (img, callback) => {
-      Image.getSize(img, (width, height) => {
-        const image = { uri: img, width, height }
-        images.push(image)
-        if (index === 0) {
-          firstViewImages.push(image)
-        } else if (index === 1 && firstItemCount === 2) {
-          firstViewImages.push(image)
-        } else {
-          secondViewImages.push(image)
-        }
-        index++
-        callback()
-      })
-    }, () => {
-      if (this.state.width) {
-        this.setState({ images, firstViewImages, secondViewImages })
-        this.getDimensions(firstViewImages, secondViewImages)
+    _.each(source, (img, callback) => {
+      if (index === 0) {
+        firstViewImages.push(img)
+      } else if (index === 1 && firstItemCount === 2) {
+        firstViewImages.push(img)
+      } else {
+        secondViewImages.push(img)
       }
+      index++
     })
-  }
 
-  getDimensions (firstViewImages, secondViewImages) {
     const { width, height } = this.props
     let ratio = 0
     if (secondViewImages.length === 0) {
@@ -69,38 +39,18 @@ class PhotoGrid extends Component {
     } else {
       ratio = this.props.ratio
     }
-    const iWidth = _.sumBy(firstViewImages, 'width')
-    const iHeight = _.sumBy(firstViewImages, 'height')
-    const direction = iWidth / iHeight > width / height ? 'column' : 'row'
+    const direction = source.length === 5 ? 'row' : 'column'
 
     const firstImageWidth = direction === 'column' ? (width / firstViewImages.length) : (width * (1 - ratio))
     const firstImageHeight = direction === 'column' ? (height * (1 - ratio)) : (height / firstViewImages.length)
 
-    const secondImageWidth = direction === 'column' ? (width * ratio) : (width / secondViewImages.length)
+    const secondImageWidth = direction === 'column' ? (width / secondViewImages.length) : (width * ratio)
     const secondImageHeight = direction === 'column' ? (height / secondViewImages.length) : (height * ratio)
 
     const secondViewWidth = direction === 'column' ? width : (width * ratio)
     const secondViewHeight = direction === 'column' ? (height * ratio) : height
-
-    this.setState({ secondViewWidth, secondViewHeight, firstImageWidth, firstImageHeight, secondImageWidth, secondImageHeight, direction, width, height })
-  }
-
-  render () {
-    const {
-      firstImageWidth,
-      firstImageHeight,
-      secondImageWidth,
-      secondImageHeight,
-      firstViewImages,
-      secondViewImages,
-      secondViewWidth,
-      secondViewHeight,
-      direction,
-      width,
-      height
-    } = this.state
-    console.log(this.state)
-    return (
+    // console.log(this.state)
+    return source.length ? (
       <View style={[{ flexDirection: direction, width, height }, this.props.styles]}>
         <View style={{ flex: 1, flexDirection: direction === 'row' ? 'column' : 'row' }}>
           {firstViewImages.map((image, index) => (
@@ -108,7 +58,7 @@ class PhotoGrid extends Component {
               onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
               <Image
                 style={[styles.image, { width: firstImageWidth, height: firstImageHeight }, this.props.imageStyle]}
-                source={{ uri: image.uri }}
+                source={{ uri: image }}
               />
             </TouchableOpacity>
           ))}
@@ -121,11 +71,11 @@ class PhotoGrid extends Component {
                   onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
                   <Image
                     style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
-                    source={{ uri: image.uri }}
+                    source={{ uri: image }}
                   >
                     {this.props.source.length > 5 && index === secondViewImages.length - 1 ? (
                       <View style={styles.lastWrapper}>
-                        <Text style={[styles.textCount, this.props.textStyles]}>{this.props.source.length - 4}</Text>
+                        <Text style={[styles.textCount, this.props.textStyles]}>+{this.props.source.length - 5}</Text>
                       </View>
                     ) : null}
                   </Image>
@@ -135,7 +85,7 @@ class PhotoGrid extends Component {
           ) : null
         }
       </View >
-    )
+    ) : null
   }
 }
 
