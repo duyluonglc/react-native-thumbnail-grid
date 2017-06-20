@@ -26,4 +26,13 @@ height | PropTypes.number | Container height
 ratio | PropTypes.float | Split screen ratio
 style | PropTypes.object | Container styles
 imageStyle | PropTypes.object | Image styles
+imageProps | PropTypes.object | Image props
 onPressImage | PropTypes.func | Callback when press image
+
+# Image props
+Property | Description
+------------ | -------------
+placeholderSource	| Show placeholderSource if the source can't be loaded or error.
+loadingStyle | Style ActivityIndicator {size: 'small'; color: 'gray'}
+isShowActivity | Show ActivityIndicator loading
+placeholderStyle | Style placeholder image
