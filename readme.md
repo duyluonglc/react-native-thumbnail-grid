@@ -16,11 +16,40 @@ const images = [
 
 ```
 
+## Custom Image source object
+
+The `source` prop also accepts an Array of source objects like so:
+
+```js
+const images = [
+  {
+    uri: 'https://cdn.pixabay.com/photo/2017/06/09/09/39/adler-2386314_960_720.jpg',
+    headers: {
+      Authorization: 'Bearer xyz'
+    }
+  },
+  {
+    uri: 'https://cdn.pixabay.com/photo/2017/06/02/18/24/fruit-2367029_960_720.jpg',
+    headers: {
+      Authorization: 'Bearer xyz'
+    }
+  },
+  {
+    uri: 'https://cdn.pixabay.com/photo/2016/08/12/22/34/apple-1589869_960_720.jpg'
+    headers: {
+      Authorization: 'Bearer xyz'
+    }
+  }
+]
+...
+<PhotoGrid source={images} onPressImage={source => this.showImage(source.uri)} />
+```
+
 # Props
 
 Property | Type | Description
 ------------ | ------------- | -------------
-source | PropTypes.array | Array uri of image
+source | PropTypes.array | Array containing Image uri string or source object
 width | PropTypes.number | Container width
 height | PropTypes.number | Container height
 ratio | PropTypes.float | Split screen ratio

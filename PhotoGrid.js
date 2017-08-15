@@ -61,7 +61,7 @@ class PhotoGrid extends Component {
               onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
               <ImageLoad
                 style={[styles.image, { width: firstImageWidth, height: firstImageHeight }, this.props.imageStyle]}
-                source={{ uri: image }}
+                source={typeof image === 'string' ? { uri: image } : image}
                 {...imageProps}
               />
             </TouchableOpacity>
@@ -76,7 +76,7 @@ class PhotoGrid extends Component {
                   {this.props.source.length > 5 && index === secondViewImages.length - 1 ? (
                     <Image
                       style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
-                      source={{ uri: image }}
+                      source={typeof image === 'string' ? { uri: image } : image}
                     >
                       <View style={styles.lastWrapper}>
                         <Text style={[styles.textCount, this.props.textStyles]}>+{this.props.source.length - 5}</Text>
@@ -85,7 +85,7 @@ class PhotoGrid extends Component {
                   )
                     : <ImageLoad
                       style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
-                      source={{ uri: image }}
+                      source={typeof image === 'string' ? { uri: image } : image}
                       {...imageProps}
                     />}
                 </TouchableOpacity>
