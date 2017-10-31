@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, Text, Dimensions, TouchableOpacity, Image } from 'react-native'
+import { View, Text, Dimensions, TouchableOpacity, ImageBackground } from 'react-native'
 import _ from 'lodash'
 import ImageLoad from 'react-native-image-placeholder'
 
@@ -74,14 +74,14 @@ class PhotoGrid extends Component {
                 <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
                   onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
                   {this.props.source.length > 5 && index === secondViewImages.length - 1 ? (
-                    <Image
+                    <ImageBackground
                       style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
                       source={typeof image === 'string' ? { uri: image } : image}
                     >
                       <View style={styles.lastWrapper}>
                         <Text style={[styles.textCount, this.props.textStyles]}>+{this.props.source.length - 5}</Text>
                       </View>
-                    </Image>
+                    </ImageBackground>
                   )
                     : <ImageLoad
                       style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
