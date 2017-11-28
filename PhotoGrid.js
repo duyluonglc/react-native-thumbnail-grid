@@ -77,8 +77,8 @@ class PhotoGrid extends PureComponent {
             <View style={{ width: secondViewWidth, height: secondViewHeight, flexDirection: direction === 'row' ? 'column' : 'row' }}>
               {secondViewImages.map((image, index) => (
                 <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
-                  onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
-                  {(this.props.source.length > 5 || this.props.numberImagesToShow) && index === secondViewImages.length - 1 ? (
+                onPress={(event) => this.props.onPressImage && this.props.onPressImage(event, image)}>
+                {(this.props.source.length > 5 || this.props.numberImagesToShow) && index === secondViewImages.length - 1 ? (
                     <ImageBackground
                       style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
                       source={typeof image === 'string' ? { uri: image } : image}
