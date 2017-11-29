@@ -12,13 +12,25 @@ class PhotoGrid extends PureComponent {
 
     this.state = {
       width: props.width,
-      height: props.height
+      height: props.height,
     }
   }
 
   static defaultProps = {
     numberImagesToShow: 0,
+    onPressImage: () => {},
   }
+
+  isLastImage = (index, secondViewImages) => {
+    const { source, numberImagesToShow } = this.props
+
+    return (source.length > 5 || numberImagesToShow) && index === secondViewImages.length - 1
+  }
+
+  handlePressImage = (event, { image, index }, secondViewImages) =>
+    this.props.onPressImage(event, image, {
+      isLastImage: index && this.isLastImage(index, secondViewImages),
+    })
 
   render () {
     const { imageProps } = this.props
@@ -63,7 +75,7 @@ class PhotoGrid extends PureComponent {
         <View style={{ flex: 1, flexDirection: direction === 'row' ? 'column' : 'row' }}>
           {firstViewImages.map((image, index) => (
             <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
-              onPress={(event) => this.props.onPressImage && this.props.onPressImage(event, image)}>
+              onPress={event => this.handlePressImage(event, { image })}>
               <ImageLoad
                 style={[styles.image, { width: firstImageWidth, height: firstImageHeight }, this.props.imageStyle]}
                 source={typeof image === 'string' ? { uri: image } : image}
@@ -77,8 +89,8 @@ class PhotoGrid extends PureComponent {
             <View style={{ width: secondViewWidth, height: secondViewHeight, flexDirection: direction === 'row' ? 'column' : 'row' }}>
               {secondViewImages.map((image, index) => (
                 <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
-                onPress={(event) => this.props.onPressImage && this.props.onPressImage(event, image)}>
-                {(this.props.source.length > 5 || this.props.numberImagesToShow) && index === secondViewImages.length - 1 ? (
+                onPress={event => this.handlePressImage(event, { image, index }, secondViewImages)}>
+                {this.isLastImage(index, secondViewImages) ? (
                     <ImageBackground
                       style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
                       source={typeof image === 'string' ? { uri: image } : image}
