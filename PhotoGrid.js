@@ -138,7 +138,6 @@ PhotoGrid.defaultProps = {
 const styles = {
   image: {
     flex: 1,
-    resizeMode: 'cover',
     borderWidth: 1,
     borderColor: '#fff'
   },
