@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Dimensions, TouchableOpacity, ImageBackground } from 'react-native'
 import _ from 'lodash'
@@ -6,14 +6,31 @@ import ImageLoad from 'react-native-image-placeholder'
 
 const { width } = Dimensions.get('window')
 
-class PhotoGrid extends Component {
+class PhotoGrid extends PureComponent {
   constructor (props) {
     super(props)
+
     this.state = {
       width: props.width,
-      height: props.height
+      height: props.height,
     }
   }
+
+  static defaultProps = {
+    numberImagesToShow: 0,
+    onPressImage: () => {},
+  }
+
+  isLastImage = (index, secondViewImages) => {
+    const { source, numberImagesToShow } = this.props
+
+    return (source.length > 5 || numberImagesToShow) && index === secondViewImages.length - 1
+  }
+
+  handlePressImage = (event, { image, index }, secondViewImages) =>
+    this.props.onPressImage(event, image, {
+      isLastImage: index && this.isLastImage(index, secondViewImages),
+    })
 
   render () {
     const { imageProps } = this.props
@@ -52,13 +69,13 @@ class PhotoGrid extends Component {
 
     const secondViewWidth = direction === 'column' ? width : (width * ratio)
     const secondViewHeight = direction === 'column' ? (height * ratio) : height
-    // console.log(this.state)
+
     return source.length ? (
       <View style={[{ flexDirection: direction, width, height }, this.props.styles]}>
         <View style={{ flex: 1, flexDirection: direction === 'row' ? 'column' : 'row' }}>
           {firstViewImages.map((image, index) => (
             <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
-              onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
+              onPress={event => this.handlePressImage(event, { image })}>
               <ImageLoad
                 style={[styles.image, { width: firstImageWidth, height: firstImageHeight }, this.props.imageStyle]}
                 source={typeof image === 'string' ? { uri: image } : image}
@@ -72,14 +89,14 @@ class PhotoGrid extends Component {
             <View style={{ width: secondViewWidth, height: secondViewHeight, flexDirection: direction === 'row' ? 'column' : 'row' }}>
               {secondViewImages.map((image, index) => (
                 <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
-                  onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
-                  {this.props.source.length > 5 && index === secondViewImages.length - 1 ? (
+                onPress={event => this.handlePressImage(event, { image, index }, secondViewImages)}>
+                {this.isLastImage(index, secondViewImages) ? (
                     <ImageBackground
                       style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
                       source={typeof image === 'string' ? { uri: image } : image}
                     >
                       <View style={styles.lastWrapper}>
-                        <Text style={[styles.textCount, this.props.textStyles]}>+{this.props.source.length - 5}</Text>
+                        <Text style={[styles.textCount, this.props.textStyles]}>+{this.props.numberImagesToShow || this.props.source.length - 5}</Text>
                       </View>
                     </ImageBackground>
                   )
@@ -121,7 +138,6 @@ PhotoGrid.defaultProps = {
 const styles = {
   image: {
     flex: 1,
-    resizeMode: 'cover',
     borderWidth: 1,
     borderColor: '#fff'
   },
