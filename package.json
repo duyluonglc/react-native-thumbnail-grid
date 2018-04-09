@@ -1,6 +1,6 @@
 {
   "name": "react-native-thumbnail-grid",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "The photo thumbnail grid",
   "main": "PhotoGrid.js",
   "scripts": {
@@ -13,6 +13,6 @@
   "author": "Duy Luong",
   "license": "MIT",
   "dependencies": {
-    "react-native-image-placeholder": "1.0.13"
+    "react-native-image-placeholder": "^1.0.14"
   }
 }
