@@ -1,4 +1,6 @@
 # React Native Photo Grid
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fduyluonglc%2Freact-native-thumbnail-grid.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fduyluonglc%2Freact-native-thumbnail-grid?ref=badge_shield)
+
 <p align="center">
   <img src="https://github.com/duyluonglc/react-native-photo-grid/blob/master/grid.gif?raw=true" width=200/>
 </p>
@@ -65,3 +67,6 @@ placeholderSource	| Show placeholderSource if the source can't be loaded or erro
 loadingStyle | Style ActivityIndicator {size: 'small'; color: 'gray'}
 isShowActivity | Show ActivityIndicator loading
 placeholderStyle | Style placeholder image
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fduyluonglc%2Freact-native-thumbnail-grid.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fduyluonglc%2Freact-native-thumbnail-grid?ref=badge_large)
