@@ -1,21 +1,27 @@
 {
-  "name": "photo",
+  "name": "example",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "react": "16.0.0-alpha.12",
-    "react-native": "0.45.1",
-    "react-native-image-placeholder": "1.0.7"
+    "lodash": "^4.17.15",
+    "react": "16.8.6",
+    "react-native": "0.60.5",
+    "react-native-thumbnail-grid": "file:../react-native-thumbnail-grid-v0.3.0.tgz"
   },
   "devDependencies": {
-    "babel-jest": "20.0.3",
-    "babel-preset-react-native": "2.0.0",
-    "jest": "20.0.4",
-    "react-test-renderer": "16.0.0-alpha.12"
+    "@babel/core": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.1.0",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "react-test-renderer": "16.8.6"
   },
   "jest": {
     "preset": "react-native"
