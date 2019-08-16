@@ -32,6 +32,16 @@ class PhotoGrid extends PureComponent {
       isLastImage: index && this.isLastImage(index, secondViewImages),
     })
 
+
+
+  renderItem(img, height, width, imgProps) {
+    return (<ImageLoad
+        style={[styles.image, { width, height }, this.props.imageStyle]}
+        source={typeof img === 'string' ? { uri: img } : img}
+        {...imgProps}
+    />);
+  }
+
   render () {
     const { imageProps } = this.props
     const source = _.take(this.props.source, 5)
@@ -76,11 +86,7 @@ class PhotoGrid extends PureComponent {
           {firstViewImages.map((image, index) => (
             <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
               onPress={event => this.handlePressImage(event, { image })}>
-              <ImageLoad
-                style={[styles.image, { width: firstImageWidth, height: firstImageHeight }, this.props.imageStyle]}
-                source={typeof image === 'string' ? { uri: image } : image}
-                {...imageProps}
-              />
+              {this.renderItem(image, firstImageHeight, firstImageWidth, imageProps)}
             </TouchableOpacity>
           ))}
         </View>
@@ -100,11 +106,8 @@ class PhotoGrid extends PureComponent {
                       </View>
                     </ImageBackground>
                   )
-                    : <ImageLoad
-                      style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
-                      source={typeof image === 'string' ? { uri: image } : image}
-                      {...imageProps}
-                    />}
+                    : this.renderItem(image, secondImageHeight, secondImageWidth, imageProps)
+                    }
                 </TouchableOpacity>
               ))}
             </View>
