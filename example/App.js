@@ -83,12 +83,12 @@ class Custom extends Component {
 
     smaller = smaller - 20;
     return (
-        <View style={[styles.Imgcontainer, styles.image, {width, height}, style]}>
+        <View style={[styles.ImgContainer, styles.image, {width, height}, style]}>
           <View style = {styles.backgroundContainer}>
-            <Image source={typeof img === 'string' ? {uri: img} : img} resizeMode = 'cover' style = {styles.backdrop} />
+            <ImageLoad source={typeof img === 'string' ? {uri: img} : img} resizeMode = 'cover' style = {styles.backdrop} />
           </View>
           <View style = {styles.overlay}>
-            <Image style = {{height: smaller, width: smaller, offsetLeft: 10, offsetTop: 10}} source = {require('./26025.png')} />
+            <Image style = {{height: smaller, width: smaller}} source = {require('./overlay.png')} />
           </View>
         </View>
     );
@@ -123,13 +123,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
-  Imgcontainer: {
+  ImgContainer: {
     flex: 1,
     alignItems: 'center',
   },
   overlay: {
     opacity: 0.5,
     alignItems: 'center',
+    justifyContent: 'center',
     //backgroundColor: '#000000'
   },
   backdrop: {
