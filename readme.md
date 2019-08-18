@@ -59,6 +59,9 @@ style | PropTypes.object | Container styles
 imageStyle | PropTypes.object | Image styles
 imageProps | PropTypes.object | Image props
 onPressImage | PropTypes.func | Callback when press image
+renderItem | PropTypes.func | function to render the view
+renderLast | PropTypes.func | function to render the last image with an overlay saying there are more
+
 
 # Image props
 Property | Description
@@ -67,6 +70,42 @@ placeholderSource	| Show placeholderSource if the source can't be loaded or erro
 loadingStyle | Style ActivityIndicator {size: 'small'; color: 'gray'}
 isShowActivity | Show ActivityIndicator loading
 placeholderStyle | Style placeholder image
+
+
+
+The `img` is one of the elements from the source array. 
+
+The default `renderItem` function is:
+```javascript
+renderItem(img, height, width, style, imgProps) {
+    return (
+      <ImageLoad
+        style={[styles.image, {width, height}, style]}
+        source={typeof img === 'string' ? {uri: img} : img}
+        {...imgProps}
+      />
+    );
+}
+```
+
+
+The default `renderItem` function is:
+
+```javascript
+renderLast(img, height, width, imgStyle, textStyle, numPhotos) {
+    return (
+        <ImageBackground
+            style={[styles.image, {width, height}, imgStyle, ]}
+            source={typeof img === 'string' ? {uri: img} : img}>
+          <View style={styles.lastWrapper}>
+            <Text style={[styles.textCount, textStyle]}>
+              + {numPhotos}
+            </Text>
+          </View>
+        </ImageBackground>
+    );
+  }
+```
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fduyluonglc%2Freact-native-thumbnail-grid.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fduyluonglc%2Freact-native-thumbnail-grid?ref=badge_large)
