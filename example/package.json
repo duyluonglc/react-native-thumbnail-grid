@@ -7,6 +7,13 @@
     "test": "jest",
     "lint": "eslint ."
   },
+  "contributors": [
+    {
+      "name" : "Marshall Asch",
+      "email" : "maasch@rogers.com",
+      "url" : "https://marshallasch.ca"
+    }
+  ],
   "dependencies": {
     "lodash": "^4.17.15",
     "react": "16.8.6",

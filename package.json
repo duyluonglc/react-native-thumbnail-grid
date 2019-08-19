@@ -11,6 +11,17 @@
     "grid"
   ],
   "author": "Duy Luong",
+  "contributors": [
+    {
+      "name" : "Marshall Asch",
+      "email" : "maasch@rogers.com",
+      "url" : "https://marshallasch.ca"
+    }
+  ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/duyluonglc/react-native-thumbnail-grid"
+  },
   "license": "MIT",
   "files": [
     "PhotoGrid.js",
