@@ -1,8 +1,8 @@
 {
   "name": "react-native-thumbnail-grid",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "The photo thumbnail grid",
-  "main": "PhotoGrid.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"No test specified\" && exit 0"
   },
@@ -11,8 +11,25 @@
     "grid"
   ],
   "author": "Duy Luong",
+  "contributors": [
+    {
+      "name" : "Marshall Asch",
+      "email" : "maasch@rogers.com",
+      "url" : "https://marshallasch.ca"
+    }
+  ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/duyluonglc/react-native-thumbnail-grid"
+  },
   "license": "MIT",
+  "files": [
+    "PhotoGrid.js",
+    "index.js"
+  ],
   "dependencies": {
-    "react-native-image-placeholder": "^1.0.14"
+    "lodash": "4.17.15",
+    "prop-types": "15.7.2",
+    "react-native-image-placeholder": "1.0.14"
   }
 }
