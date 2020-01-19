@@ -14,7 +14,7 @@ const images = [
   'https://cdn.pixabay.com/photo/2016/08/12/22/34/apple-1589869_960_720.jpg'
 ]
 ...
-<PhotoGrid source={images} onPressImage={uri => this.showImage(uri)} />
+<PhotoGrid source={images} onPressImage={(event, uri) => this.showImage(uri)} />
 
 ```
 
@@ -44,7 +44,7 @@ const images = [
   }
 ]
 ...
-<PhotoGrid source={images} onPressImage={source => this.showImage(source.uri)} />
+<PhotoGrid source={images} onPressImage={(event, source) => this.showImage(source.uri)} />
 ```
 
 # Props
