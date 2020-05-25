@@ -59,6 +59,7 @@ style | PropTypes.object | Container styles
 imageStyle | PropTypes.object | Image styles
 imageProps | PropTypes.object | Image props
 onPressImage | PropTypes.func | Callback when press image
+activeOpacity | PropTypes.number | Opacity when an image is pressed
 
 # Image props
 Property | Description
