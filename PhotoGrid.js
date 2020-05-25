@@ -19,6 +19,7 @@ class PhotoGrid extends PureComponent {
   static defaultProps = {
     numberImagesToShow: 0,
     onPressImage: () => {},
+    activeOpacity: 0.7,
   }
 
   isLastImage = (index, secondViewImages) => {
@@ -74,7 +75,7 @@ class PhotoGrid extends PureComponent {
       <View style={[{ flexDirection: direction, width, height }, this.props.styles]}>
         <View style={{ flex: 1, flexDirection: direction === 'row' ? 'column' : 'row' }}>
           {firstViewImages.map((image, index) => (
-            <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
+            <TouchableOpacity activeOpacity={this.props.activeOpacity} key={index} style={{ flex: 1 }}
               onPress={event => this.handlePressImage(event, { image })}>
               <ImageLoad
                 style={[styles.image, { width: firstImageWidth, height: firstImageHeight }, this.props.imageStyle]}
@@ -88,7 +89,7 @@ class PhotoGrid extends PureComponent {
           secondViewImages.length ? (
             <View style={{ width: secondViewWidth, height: secondViewHeight, flexDirection: direction === 'row' ? 'column' : 'row' }}>
               {secondViewImages.map((image, index) => (
-                <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
+                <TouchableOpacity activeOpacity={this.props.activeOpacity} key={index} style={{ flex: 1 }}
                 onPress={event => this.handlePressImage(event, { image, index }, secondViewImages)}>
                 {this.isLastImage(index, secondViewImages) ? (
                     <ImageBackground
@@ -123,7 +124,8 @@ PhotoGrid.prototypes = {
   imageStyle: PropTypes.object,
   onPressImage: PropTypes.func,
   ratio: PropTypes.float,
-  imageProps: PropTypes.object
+  imageProps: PropTypes.object,
+  activeOpacity: PropTypes.number
 }
 
 PhotoGrid.defaultProps = {
@@ -132,7 +134,8 @@ PhotoGrid.defaultProps = {
   imageProps: {},
   width: width,
   height: 400,
-  ratio: 1 / 3
+  ratio: 1 / 3,
+  activeOpacity: 0.7
 }
 
 const styles = {
